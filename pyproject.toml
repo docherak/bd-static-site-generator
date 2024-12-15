@@ -1,0 +1,17 @@
+[project]
+name = "static-site-generator"
+version = "0.1.0"
+description = "Part of boot.dev Python projects"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "mypy>=1.13.0",
+    "ruff>=0.7.2",
+]
+
+# Ignore star import violations
+[tool.ruff.lint]
+ignore = ["F405", "F403"]
