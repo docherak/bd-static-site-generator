@@ -4,6 +4,7 @@ from htmlnode import ParentNode
 from inline_md import text_to_textnodes
 from textnode import text_node_to_html_node
 
+
 class BlockType(Enum):
     PARAGRAPH = "paragraph"
     HEADING = "heading"
@@ -15,13 +16,13 @@ class BlockType(Enum):
 
 def markdown_to_blocks(markdown):
     blocks = markdown.strip().split("\n\n")
-    
+
     cleaned_blocks = [
         "\n".join(line.strip() for line in block.split("\n")).strip()
         for block in blocks
         if block
     ]
-    
+
     return cleaned_blocks
 
 
@@ -29,7 +30,11 @@ def block_to_block_type(markdown_block):
     lines = markdown_block.split("\n")
     if re.match(r"^#{1,6} ", markdown_block):
         return BlockType.HEADING
-    if markdown_block.startswith("```") and len(lines) > 1 and lines[-1].startswith("```"):
+    if (
+        markdown_block.startswith("```")
+        and len(lines) > 1
+        and lines[-1].startswith("```")
+    ):
         return BlockType.CODE
     if markdown_block.startswith(">"):
         for line in lines:
@@ -72,7 +77,7 @@ def block_to_html_node(block):
         case BlockType.UNORDERED_LIST:
             return u_list_to_html_node(block)
         case BlockType.ORDERED_LIST:
-            return o_list_to_html_node(block)   
+            return o_list_to_html_node(block)
     raise ValueError("invalid block type")
 
 
